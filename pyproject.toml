@@ -1,3 +1,21 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "banxico-evidence-briefing"
+version = "1.0.0"
+description = "Briefing con evidencia sobre publicaciones del Banco de México (recuperación léxica con citas)."
+requires-python = ">=3.11"
+dependencies = ["pydantic-settings>=2.0,<3"]
+
+[project.optional-dependencies]
+dev = ["pytest==8.4.2"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["app", "app.rag_banxico"]
+
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]

@@ -48,6 +48,31 @@ de alcance, como *«¿Cuál es la capital de Francia?»*, para ver la abstenció
 
 ![Portada del briefing con evidencia](docs/cover.jpg)
 
+## Instalación
+
+El paquete de dominio (`src/app`) se instala en el entorno activo; requiere
+Python 3.11 o superior.
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate            # Windows · en Linux/macOS: source .venv/bin/activate
+python -m pip install -e .        # con pytest: python -m pip install -e ".[dev]"
+python examples/uso.py            # recuperación real sobre el corpus incluido
+python -m pytest -q
+```
+
+`python -m pip install -e .` deja `app` importable desde cualquier directorio y ya
+no depende de la opción `pythonpath` de pytest (que se conserva para poder correr
+las pruebas sin instalar). `examples/uso.py` usa `web/corpus.json` tal cual: no
+descarga nada ni necesita Atlas ni un proveedor de modelos.
+
+**Demo estática (`web/`) frente a servicio de dominio (`src/`).** `web/` es la
+aplicación que se sirve con un servidor de archivos estático: HTML, CSS y
+JavaScript leen `web/corpus.json` y dibujan la respuesta con sus citas, sin Python
+ni instalación. `src/app` es el servicio de dominio: recuperación léxica,
+respuesta anclada a la evidencia y diagnóstico de salud. Instalar solo es
+necesario para usar `src/app` como biblioteca o para correr las pruebas.
+
 ## Servicio de dominio
 
 ```bash
@@ -124,6 +149,7 @@ web/                        Aplicación estática (sin compilación)
   vendor/d3.min.js          D3 v7.9.2 (ISC), servido localmente
 src/app/config.py           Configuración sin secretos ni rutas absolutas
 src/app/rag_banxico/        Recuperación léxica, respuesta y salud
+examples/uso.py             Ejemplo ejecutable sobre el corpus incluido
 tests/test_service.py       Pruebas sin Atlas ni proveedor
 docs/ARCHITECTURE.md        Flujo de recuperación y contrato HTTP
 docs/DATA.md                Fuentes, transcripción y límites
